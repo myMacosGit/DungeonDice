@@ -70,7 +70,7 @@ struct ContentView: View {
                     Button("\(Dice.twenty.rawValue)-sided") {
                         resultMessage = "You rolled a \(Dice.twenty.roll()) on a \(Dice.twenty.rawValue)-sided dice"
                     }
-                } // HStack
+                } // HStack 
                 
                 Button("\(Dice.hundred.rawValue)-sided") {
                     resultMessage = "You rolled a \(Dice.hundred.roll()) on a \(Dice.hundred.rawValue)-sided dice"
