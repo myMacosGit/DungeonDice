@@ -38,18 +38,16 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geo in
             VStack {
-                Text("Dungeon Dice")
-                    .font(.largeTitle)
-                    .fontWeight(.black)
-                    .foregroundColor(.red)
+                titleView   // computed property
                 
                 Spacer()
                 
-                Text(resultMessage)
-                    .font(.largeTitle)
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .frame(height: 150)
+                resultMessageView
+//                Text(resultMessage)
+//                    .font(.largeTitle)
+//                    .fontWeight(.medium)
+//                    .multilineTextAlignment(.center)
+//                    .frame(height: 150)
                 
                 Spacer()
                 
@@ -80,68 +78,78 @@ struct ContentView: View {
             } // VStack
             .padding()
             .onChange(of: geo.size.width, perform: { newValue in
-                
-                
-//                var screenWidth = geo.size.width - horizontalPadding * 2 // padding on both sides
-//                if Dice.allCases.count > 1 {
-//                    screenWidth += spacing
-//                }
-//
-//                // caluulate numOfButtonsPerRow as a Int
-//                let numOfButtonsPerRow = Int(screenWidth) / Int(buttonWidth + spacing)
-//                buttonsLeftOver = Dice.allCases.count % numOfButtonsPerRow
-//
-//                print("numOfButtonsPerRow = \(numOfButtonsPerRow)")
-//                print("buttonsLeftOver = \(buttonsLeftOver)")
-                
-                arrangeGridItems(geo: geo)
-                
-                
+                arrangeGridItems(deviceWidth: geo.size.width)
             }) // onChange
             .onAppear {
-//                var screenWidth = geo.size.width - horizontalPadding * 2 // padding on both sides
-//                if Dice.allCases.count > 1 {
-//                    screenWidth += spacing
-//                }
-//
-//                // caluulate numOfButtonsPerRow as a Int
-//                let numOfButtonsPerRow = Int(screenWidth) / Int(buttonWidth + spacing)
-//                buttonsLeftOver = Dice.allCases.count % numOfButtonsPerRow
-//
-//                print("numOfButtonsPerRow = \(numOfButtonsPerRow)")
-//                print("buttonsLeftOver = \(buttonsLeftOver)")
-                
-                arrangeGridItems(geo: geo)
-                
+                arrangeGridItems(deviceWidth: geo.size.width)
             } // onAppear
         } // geo
         
     } // body
     
-    
-    
-    func arrangeGridItems(geo: GeometryProxy) {
-        var screenWidth =  geo.size.width - horizontalPadding * 2 // padding on both sides
-                if Dice.allCases.count > 1 {
-                    screenWidth += spacing
-                }
-                
-                // caluulate numOfButtonsPerRow as a Int
-                let numOfButtonsPerRow = Int(screenWidth) / Int(buttonWidth + spacing)
-                buttonsLeftOver = Dice.allCases.count % numOfButtonsPerRow
-                
-                print("numOfButtonsPerRow = \(numOfButtonsPerRow)")
-                print("buttonsLeftOver = \(buttonsLeftOver)")
-
-            }
-
-    
-    
+    func arrangeGridItems(deviceWidth: CGFloat) {
+        var screenWidth =  deviceWidth - horizontalPadding * 2 // padding on both sides
+        if Dice.allCases.count > 1 {
+            screenWidth += spacing
+        }
+        
+        // caluulate numOfButtonsPerRow as a Int
+        let numOfButtonsPerRow = Int(screenWidth) / Int(buttonWidth + spacing)
+        buttonsLeftOver = Dice.allCases.count % numOfButtonsPerRow
+        
+        print("numOfButtonsPerRow = \(numOfButtonsPerRow)")
+        print("buttonsLeftOver = \(buttonsLeftOver)")
+        
+    } // arrangeGridItems
     
 } // struct ContentView
+
+extension ContentView {
+    private var titleView: some View {
+        Text("Dungeon Dice")             // return
+            .font(.largeTitle)
+            .fontWeight(.black)
+            .foregroundColor(.red)
+
+    }
+    
+    private var resultMessageView: some View {
+        Text(resultMessage)
+            .font(.largeTitle)
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .frame(height: 150)
+
+    }
+
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+
+
+
+
+
+//struct TitleView: View {
+//    var body: some View {
+//        Text("Dungeon Dice")
+//            // .font(.largeTitle)
+//            .font(.custom("Snell Roundhand", size: 60))
+//            .fontWeight(.black)
+//            .foregroundColor(.red)
+//            .minimumScaleFactor(0.5)
+//            .lineLimit(1)
+//
+//    }
+//}
+//
+//struct TitleView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TitleView()
+//            .padding()
+//    }
+//}
